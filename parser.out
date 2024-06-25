@@ -1,0 +1,638 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> declarations statements
+Rule 2     declarations -> declarations declaration
+Rule 3     declarations -> declaration
+Rule 4     declaration -> INT ID EQUALS NUM SEMICOLON
+Rule 5     statements -> statements statement
+Rule 6     statements -> statement
+Rule 7     statement -> ID EQUALS expression SEMICOLON
+Rule 8     statement -> DO statements ENDDO WHILE condition ENDWHILE
+Rule 9     expression -> NUM PLUS expression
+Rule 10    expression -> ID PLUS expression
+Rule 11    expression -> expression PLUS NUM
+Rule 12    expression -> expression PLUS ID
+Rule 13    expression -> NUM TIMES expression
+Rule 14    expression -> ID TIMES expression
+Rule 15    expression -> expression TIMES NUM
+Rule 16    expression -> expression TIMES ID
+Rule 17    expression -> LPAREN expression RPAREN
+Rule 18    expression -> NUM
+Rule 19    expression -> ID
+Rule 20    condition -> LPAREN ID DOUBLEEQUALS NUM RPAREN
+
+Terminals, with rules where they appear
+
+DO                   : 8
+DOUBLEEQUALS         : 20
+ENDDO                : 8
+ENDWHILE             : 8
+EQUALS               : 4 7
+ID                   : 4 7 10 12 14 16 19 20
+INT                  : 4
+LPAREN               : 17 20
+NUM                  : 4 9 11 13 15 18 20
+PLUS                 : 9 10 11 12
+RPAREN               : 17 20
+SEMICOLON            : 4 7
+TIMES                : 13 14 15 16
+WHILE                : 8
+error                : 
+
+Nonterminals, with rules where they appear
+
+condition            : 8
+declaration          : 2 3
+declarations         : 1 2
+expression           : 7 9 10 11 12 13 14 15 16 17
+program              : 0
+statement            : 5 6
+statements           : 1 5 8
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . declarations statements
+    (2) declarations -> . declarations declaration
+    (3) declarations -> . declaration
+    (4) declaration -> . INT ID EQUALS NUM SEMICOLON
+
+    INT             shift and go to state 4
+
+    program                        shift and go to state 1
+    declarations                   shift and go to state 2
+    declaration                    shift and go to state 3
+
+state 1
+
+    (0) S' -> program .
+
+
+
+state 2
+
+    (1) program -> declarations . statements
+    (2) declarations -> declarations . declaration
+    (5) statements -> . statements statement
+    (6) statements -> . statement
+    (4) declaration -> . INT ID EQUALS NUM SEMICOLON
+    (7) statement -> . ID EQUALS expression SEMICOLON
+    (8) statement -> . DO statements ENDDO WHILE condition ENDWHILE
+
+    INT             shift and go to state 4
+    ID              shift and go to state 8
+    DO              shift and go to state 9
+
+    statements                     shift and go to state 5
+    declaration                    shift and go to state 6
+    statement                      shift and go to state 7
+
+state 3
+
+    (3) declarations -> declaration .
+
+    INT             reduce using rule 3 (declarations -> declaration .)
+    ID              reduce using rule 3 (declarations -> declaration .)
+    DO              reduce using rule 3 (declarations -> declaration .)
+
+
+state 4
+
+    (4) declaration -> INT . ID EQUALS NUM SEMICOLON
+
+    ID              shift and go to state 10
+
+
+state 5
+
+    (1) program -> declarations statements .
+    (5) statements -> statements . statement
+    (7) statement -> . ID EQUALS expression SEMICOLON
+    (8) statement -> . DO statements ENDDO WHILE condition ENDWHILE
+
+    $end            reduce using rule 1 (program -> declarations statements .)
+    ID              shift and go to state 8
+    DO              shift and go to state 9
+
+    statement                      shift and go to state 11
+
+state 6
+
+    (2) declarations -> declarations declaration .
+
+    INT             reduce using rule 2 (declarations -> declarations declaration .)
+    ID              reduce using rule 2 (declarations -> declarations declaration .)
+    DO              reduce using rule 2 (declarations -> declarations declaration .)
+
+
+state 7
+
+    (6) statements -> statement .
+
+    ID              reduce using rule 6 (statements -> statement .)
+    DO              reduce using rule 6 (statements -> statement .)
+    $end            reduce using rule 6 (statements -> statement .)
+    ENDDO           reduce using rule 6 (statements -> statement .)
+
+
+state 8
+
+    (7) statement -> ID . EQUALS expression SEMICOLON
+
+    EQUALS          shift and go to state 12
+
+
+state 9
+
+    (8) statement -> DO . statements ENDDO WHILE condition ENDWHILE
+    (5) statements -> . statements statement
+    (6) statements -> . statement
+    (7) statement -> . ID EQUALS expression SEMICOLON
+    (8) statement -> . DO statements ENDDO WHILE condition ENDWHILE
+
+    ID              shift and go to state 8
+    DO              shift and go to state 9
+
+    statements                     shift and go to state 13
+    statement                      shift and go to state 7
+
+state 10
+
+    (4) declaration -> INT ID . EQUALS NUM SEMICOLON
+
+    EQUALS          shift and go to state 14
+
+
+state 11
+
+    (5) statements -> statements statement .
+
+    ID              reduce using rule 5 (statements -> statements statement .)
+    DO              reduce using rule 5 (statements -> statements statement .)
+    $end            reduce using rule 5 (statements -> statements statement .)
+    ENDDO           reduce using rule 5 (statements -> statements statement .)
+
+
+state 12
+
+    (7) statement -> ID EQUALS . expression SEMICOLON
+    (9) expression -> . NUM PLUS expression
+    (10) expression -> . ID PLUS expression
+    (11) expression -> . expression PLUS NUM
+    (12) expression -> . expression PLUS ID
+    (13) expression -> . NUM TIMES expression
+    (14) expression -> . ID TIMES expression
+    (15) expression -> . expression TIMES NUM
+    (16) expression -> . expression TIMES ID
+    (17) expression -> . LPAREN expression RPAREN
+    (18) expression -> . NUM
+    (19) expression -> . ID
+
+    NUM             shift and go to state 17
+    ID              shift and go to state 15
+    LPAREN          shift and go to state 18
+
+    expression                     shift and go to state 16
+
+state 13
+
+    (8) statement -> DO statements . ENDDO WHILE condition ENDWHILE
+    (5) statements -> statements . statement
+    (7) statement -> . ID EQUALS expression SEMICOLON
+    (8) statement -> . DO statements ENDDO WHILE condition ENDWHILE
+
+    ENDDO           shift and go to state 19
+    ID              shift and go to state 8
+    DO              shift and go to state 9
+
+    statement                      shift and go to state 11
+
+state 14
+
+    (4) declaration -> INT ID EQUALS . NUM SEMICOLON
+
+    NUM             shift and go to state 20
+
+
+state 15
+
+    (10) expression -> ID . PLUS expression
+    (14) expression -> ID . TIMES expression
+    (19) expression -> ID .
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+    PLUS            shift and go to state 21
+    TIMES           shift and go to state 22
+    SEMICOLON       reduce using rule 19 (expression -> ID .)
+    RPAREN          reduce using rule 19 (expression -> ID .)
+
+  ! PLUS            [ reduce using rule 19 (expression -> ID .) ]
+  ! TIMES           [ reduce using rule 19 (expression -> ID .) ]
+
+
+state 16
+
+    (7) statement -> ID EQUALS expression . SEMICOLON
+    (11) expression -> expression . PLUS NUM
+    (12) expression -> expression . PLUS ID
+    (15) expression -> expression . TIMES NUM
+    (16) expression -> expression . TIMES ID
+
+    SEMICOLON       shift and go to state 23
+    PLUS            shift and go to state 24
+    TIMES           shift and go to state 25
+
+
+state 17
+
+    (9) expression -> NUM . PLUS expression
+    (13) expression -> NUM . TIMES expression
+    (18) expression -> NUM .
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+    PLUS            shift and go to state 26
+    TIMES           shift and go to state 27
+    SEMICOLON       reduce using rule 18 (expression -> NUM .)
+    RPAREN          reduce using rule 18 (expression -> NUM .)
+
+  ! PLUS            [ reduce using rule 18 (expression -> NUM .) ]
+  ! TIMES           [ reduce using rule 18 (expression -> NUM .) ]
+
+
+state 18
+
+    (17) expression -> LPAREN . expression RPAREN
+    (9) expression -> . NUM PLUS expression
+    (10) expression -> . ID PLUS expression
+    (11) expression -> . expression PLUS NUM
+    (12) expression -> . expression PLUS ID
+    (13) expression -> . NUM TIMES expression
+    (14) expression -> . ID TIMES expression
+    (15) expression -> . expression TIMES NUM
+    (16) expression -> . expression TIMES ID
+    (17) expression -> . LPAREN expression RPAREN
+    (18) expression -> . NUM
+    (19) expression -> . ID
+
+    NUM             shift and go to state 17
+    ID              shift and go to state 15
+    LPAREN          shift and go to state 18
+
+    expression                     shift and go to state 28
+
+state 19
+
+    (8) statement -> DO statements ENDDO . WHILE condition ENDWHILE
+
+    WHILE           shift and go to state 29
+
+
+state 20
+
+    (4) declaration -> INT ID EQUALS NUM . SEMICOLON
+
+    SEMICOLON       shift and go to state 30
+
+
+state 21
+
+    (10) expression -> ID PLUS . expression
+    (9) expression -> . NUM PLUS expression
+    (10) expression -> . ID PLUS expression
+    (11) expression -> . expression PLUS NUM
+    (12) expression -> . expression PLUS ID
+    (13) expression -> . NUM TIMES expression
+    (14) expression -> . ID TIMES expression
+    (15) expression -> . expression TIMES NUM
+    (16) expression -> . expression TIMES ID
+    (17) expression -> . LPAREN expression RPAREN
+    (18) expression -> . NUM
+    (19) expression -> . ID
+
+    NUM             shift and go to state 17
+    ID              shift and go to state 15
+    LPAREN          shift and go to state 18
+
+    expression                     shift and go to state 31
+
+state 22
+
+    (14) expression -> ID TIMES . expression
+    (9) expression -> . NUM PLUS expression
+    (10) expression -> . ID PLUS expression
+    (11) expression -> . expression PLUS NUM
+    (12) expression -> . expression PLUS ID
+    (13) expression -> . NUM TIMES expression
+    (14) expression -> . ID TIMES expression
+    (15) expression -> . expression TIMES NUM
+    (16) expression -> . expression TIMES ID
+    (17) expression -> . LPAREN expression RPAREN
+    (18) expression -> . NUM
+    (19) expression -> . ID
+
+    NUM             shift and go to state 17
+    ID              shift and go to state 15
+    LPAREN          shift and go to state 18
+
+    expression                     shift and go to state 32
+
+state 23
+
+    (7) statement -> ID EQUALS expression SEMICOLON .
+
+    ID              reduce using rule 7 (statement -> ID EQUALS expression SEMICOLON .)
+    DO              reduce using rule 7 (statement -> ID EQUALS expression SEMICOLON .)
+    $end            reduce using rule 7 (statement -> ID EQUALS expression SEMICOLON .)
+    ENDDO           reduce using rule 7 (statement -> ID EQUALS expression SEMICOLON .)
+
+
+state 24
+
+    (11) expression -> expression PLUS . NUM
+    (12) expression -> expression PLUS . ID
+
+    NUM             shift and go to state 33
+    ID              shift and go to state 34
+
+
+state 25
+
+    (15) expression -> expression TIMES . NUM
+    (16) expression -> expression TIMES . ID
+
+    NUM             shift and go to state 35
+    ID              shift and go to state 36
+
+
+state 26
+
+    (9) expression -> NUM PLUS . expression
+    (9) expression -> . NUM PLUS expression
+    (10) expression -> . ID PLUS expression
+    (11) expression -> . expression PLUS NUM
+    (12) expression -> . expression PLUS ID
+    (13) expression -> . NUM TIMES expression
+    (14) expression -> . ID TIMES expression
+    (15) expression -> . expression TIMES NUM
+    (16) expression -> . expression TIMES ID
+    (17) expression -> . LPAREN expression RPAREN
+    (18) expression -> . NUM
+    (19) expression -> . ID
+
+    NUM             shift and go to state 17
+    ID              shift and go to state 15
+    LPAREN          shift and go to state 18
+
+    expression                     shift and go to state 37
+
+state 27
+
+    (13) expression -> NUM TIMES . expression
+    (9) expression -> . NUM PLUS expression
+    (10) expression -> . ID PLUS expression
+    (11) expression -> . expression PLUS NUM
+    (12) expression -> . expression PLUS ID
+    (13) expression -> . NUM TIMES expression
+    (14) expression -> . ID TIMES expression
+    (15) expression -> . expression TIMES NUM
+    (16) expression -> . expression TIMES ID
+    (17) expression -> . LPAREN expression RPAREN
+    (18) expression -> . NUM
+    (19) expression -> . ID
+
+    NUM             shift and go to state 17
+    ID              shift and go to state 15
+    LPAREN          shift and go to state 18
+
+    expression                     shift and go to state 38
+
+state 28
+
+    (17) expression -> LPAREN expression . RPAREN
+    (11) expression -> expression . PLUS NUM
+    (12) expression -> expression . PLUS ID
+    (15) expression -> expression . TIMES NUM
+    (16) expression -> expression . TIMES ID
+
+    RPAREN          shift and go to state 39
+    PLUS            shift and go to state 24
+    TIMES           shift and go to state 25
+
+
+state 29
+
+    (8) statement -> DO statements ENDDO WHILE . condition ENDWHILE
+    (20) condition -> . LPAREN ID DOUBLEEQUALS NUM RPAREN
+
+    LPAREN          shift and go to state 41
+
+    condition                      shift and go to state 40
+
+state 30
+
+    (4) declaration -> INT ID EQUALS NUM SEMICOLON .
+
+    INT             reduce using rule 4 (declaration -> INT ID EQUALS NUM SEMICOLON .)
+    ID              reduce using rule 4 (declaration -> INT ID EQUALS NUM SEMICOLON .)
+    DO              reduce using rule 4 (declaration -> INT ID EQUALS NUM SEMICOLON .)
+
+
+state 31
+
+    (10) expression -> ID PLUS expression .
+    (11) expression -> expression . PLUS NUM
+    (12) expression -> expression . PLUS ID
+    (15) expression -> expression . TIMES NUM
+    (16) expression -> expression . TIMES ID
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+    SEMICOLON       reduce using rule 10 (expression -> ID PLUS expression .)
+    RPAREN          reduce using rule 10 (expression -> ID PLUS expression .)
+    PLUS            shift and go to state 24
+    TIMES           shift and go to state 25
+
+  ! PLUS            [ reduce using rule 10 (expression -> ID PLUS expression .) ]
+  ! TIMES           [ reduce using rule 10 (expression -> ID PLUS expression .) ]
+
+
+state 32
+
+    (14) expression -> ID TIMES expression .
+    (11) expression -> expression . PLUS NUM
+    (12) expression -> expression . PLUS ID
+    (15) expression -> expression . TIMES NUM
+    (16) expression -> expression . TIMES ID
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+    SEMICOLON       reduce using rule 14 (expression -> ID TIMES expression .)
+    RPAREN          reduce using rule 14 (expression -> ID TIMES expression .)
+    PLUS            shift and go to state 24
+    TIMES           shift and go to state 25
+
+  ! PLUS            [ reduce using rule 14 (expression -> ID TIMES expression .) ]
+  ! TIMES           [ reduce using rule 14 (expression -> ID TIMES expression .) ]
+
+
+state 33
+
+    (11) expression -> expression PLUS NUM .
+
+    SEMICOLON       reduce using rule 11 (expression -> expression PLUS NUM .)
+    PLUS            reduce using rule 11 (expression -> expression PLUS NUM .)
+    TIMES           reduce using rule 11 (expression -> expression PLUS NUM .)
+    RPAREN          reduce using rule 11 (expression -> expression PLUS NUM .)
+
+
+state 34
+
+    (12) expression -> expression PLUS ID .
+
+    SEMICOLON       reduce using rule 12 (expression -> expression PLUS ID .)
+    PLUS            reduce using rule 12 (expression -> expression PLUS ID .)
+    TIMES           reduce using rule 12 (expression -> expression PLUS ID .)
+    RPAREN          reduce using rule 12 (expression -> expression PLUS ID .)
+
+
+state 35
+
+    (15) expression -> expression TIMES NUM .
+
+    SEMICOLON       reduce using rule 15 (expression -> expression TIMES NUM .)
+    PLUS            reduce using rule 15 (expression -> expression TIMES NUM .)
+    TIMES           reduce using rule 15 (expression -> expression TIMES NUM .)
+    RPAREN          reduce using rule 15 (expression -> expression TIMES NUM .)
+
+
+state 36
+
+    (16) expression -> expression TIMES ID .
+
+    SEMICOLON       reduce using rule 16 (expression -> expression TIMES ID .)
+    PLUS            reduce using rule 16 (expression -> expression TIMES ID .)
+    TIMES           reduce using rule 16 (expression -> expression TIMES ID .)
+    RPAREN          reduce using rule 16 (expression -> expression TIMES ID .)
+
+
+state 37
+
+    (9) expression -> NUM PLUS expression .
+    (11) expression -> expression . PLUS NUM
+    (12) expression -> expression . PLUS ID
+    (15) expression -> expression . TIMES NUM
+    (16) expression -> expression . TIMES ID
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+    SEMICOLON       reduce using rule 9 (expression -> NUM PLUS expression .)
+    RPAREN          reduce using rule 9 (expression -> NUM PLUS expression .)
+    PLUS            shift and go to state 24
+    TIMES           shift and go to state 25
+
+  ! PLUS            [ reduce using rule 9 (expression -> NUM PLUS expression .) ]
+  ! TIMES           [ reduce using rule 9 (expression -> NUM PLUS expression .) ]
+
+
+state 38
+
+    (13) expression -> NUM TIMES expression .
+    (11) expression -> expression . PLUS NUM
+    (12) expression -> expression . PLUS ID
+    (15) expression -> expression . TIMES NUM
+    (16) expression -> expression . TIMES ID
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+    SEMICOLON       reduce using rule 13 (expression -> NUM TIMES expression .)
+    RPAREN          reduce using rule 13 (expression -> NUM TIMES expression .)
+    PLUS            shift and go to state 24
+    TIMES           shift and go to state 25
+
+  ! PLUS            [ reduce using rule 13 (expression -> NUM TIMES expression .) ]
+  ! TIMES           [ reduce using rule 13 (expression -> NUM TIMES expression .) ]
+
+
+state 39
+
+    (17) expression -> LPAREN expression RPAREN .
+
+    SEMICOLON       reduce using rule 17 (expression -> LPAREN expression RPAREN .)
+    PLUS            reduce using rule 17 (expression -> LPAREN expression RPAREN .)
+    TIMES           reduce using rule 17 (expression -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 17 (expression -> LPAREN expression RPAREN .)
+
+
+state 40
+
+    (8) statement -> DO statements ENDDO WHILE condition . ENDWHILE
+
+    ENDWHILE        shift and go to state 42
+
+
+state 41
+
+    (20) condition -> LPAREN . ID DOUBLEEQUALS NUM RPAREN
+
+    ID              shift and go to state 43
+
+
+state 42
+
+    (8) statement -> DO statements ENDDO WHILE condition ENDWHILE .
+
+    ID              reduce using rule 8 (statement -> DO statements ENDDO WHILE condition ENDWHILE .)
+    DO              reduce using rule 8 (statement -> DO statements ENDDO WHILE condition ENDWHILE .)
+    $end            reduce using rule 8 (statement -> DO statements ENDDO WHILE condition ENDWHILE .)
+    ENDDO           reduce using rule 8 (statement -> DO statements ENDDO WHILE condition ENDWHILE .)
+
+
+state 43
+
+    (20) condition -> LPAREN ID . DOUBLEEQUALS NUM RPAREN
+
+    DOUBLEEQUALS    shift and go to state 44
+
+
+state 44
+
+    (20) condition -> LPAREN ID DOUBLEEQUALS . NUM RPAREN
+
+    NUM             shift and go to state 45
+
+
+state 45
+
+    (20) condition -> LPAREN ID DOUBLEEQUALS NUM . RPAREN
+
+    RPAREN          shift and go to state 46
+
+
+state 46
+
+    (20) condition -> LPAREN ID DOUBLEEQUALS NUM RPAREN .
+
+    ENDWHILE        reduce using rule 20 (condition -> LPAREN ID DOUBLEEQUALS NUM RPAREN .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for PLUS in state 15 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 15 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 17 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 17 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 31 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 31 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 32 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 32 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 37 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 37 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 38 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 38 resolved as shift
